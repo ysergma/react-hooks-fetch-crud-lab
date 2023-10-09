@@ -1,12 +1,27 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
+import uuid from "react-uuid";
+function QuestionForm() {
 
-function QuestionForm(props) {
+  const Setter = async(data)=> {
+
+    const resp = await fetch("http://localhost:4000/questions",{
+      method: 'POST',
+      headers:
+      { "Content-Type": "application/json" },
+      body:data
+      ,
+    });
+    const quest= await resp.json();
+}
   const [formData, setFormData] = useState({
+    id:uuid(),
     prompt: "",
-    answer1: "",
-    answer2: "",
-    answer3: "",
-    answer4: "",
+    answers:[
+       "",
+      "",
+       "",
+       "",
+    ],
     correctIndex: 0,
   });
 
@@ -19,8 +34,10 @@ function QuestionForm(props) {
 
   function handleSubmit(event) {
     event.preventDefault();
-    console.log(formData);
+    console.log(formData)
+    Setter(JSON.stringify(formData))
   }
+
 
   return (
     <section>
